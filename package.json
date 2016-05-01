@@ -1,0 +1,11 @@
+{
+  "name": "lineup-builder",
+  "version": "0.0.1",
+  "description": "Constructs a baseball lineup based on players, positions, and user-defined rules.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justin Makeig <jmpublic+github@makeig.com> (https://www.github.com/jmakeig)",
+  "license": "Apache-2.0"
+}
