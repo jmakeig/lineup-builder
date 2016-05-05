@@ -17,25 +17,24 @@ function isInfield(position) { return position < 6; }
 function isOutfield(position) { return position > 5; }
 function isBench(position) { null === position || 'undefined' === typeof position || position < 0 || position > 9;  }
 
-const PLAYERS = ['Kingston', 'Naim', 'Micah', 'Oliver', 'Cadeo', 'Joseph', 'Jonathan', 'Vincent', 'Mateo', 'Harper', 'Griffin', 'Devin', 'Dalen', 'Quincy'];
-const POSITIONS = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'CF'];
-const RULES = [
-  //pitchers,
-  //catchers,
-  infieldOutfieldBalance,
-];
+const alwaysPass = () => true;
 
-function pitchers(game) {
+const eligiblePitchers = (game) => {
   return game
     .every(inning => ['Joseph', 'Cadeo', 'Jonathan', 'Oliver', 'Micah', 'Devin', 'Quincy', 'Kingston']
     .some(player => player === inning[1 - 1]));
 }
-function catchers(game) {
+
+const eligibleCatchers = (game) => {
   return game
-    .every(inning => ['Oliver', 'Dalen', 'Micah', 'Naim', 'Devin']
+    .every(inning => ['Oliver', 'Dalen', 'Micah', 'Naim', 'Devin', 'Vincent']
     .some(player => player === inning[2 - 1]));
 }
-function infieldOutfieldBalance(game, players, positions) {
+
+const onlyPitchOneInning = alwaysPass;
+const dontSitConsecutiveInnings = alwaysPass;
+
+const infieldOutfieldBalance = (game, players, positions) => {
   /*
     IF: 6 -> P, C, 1B, 2B, 3B, SS
     OF: 4 -> LF, CF, RF, CF
@@ -49,7 +48,15 @@ function infieldOutfieldBalance(game, players, positions) {
     });
 }
 
-
+const PLAYERS = ['Kingston', 'Naim', 'Micah', 'Oliver', 'Cadeo', 'Joseph', 'Jonathan', 'Vincent', 'Mateo', 'Harper', 'Griffin', 'Devin', 'Dalen', 'Quincy'];
+const POSITIONS = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'CF'];
+const RULES = [
+  eligiblePitchers,
+  eligibleCatchers,
+  onlyPitchOneInning,
+  dontSitConsecutiveInnings,
+  infieldOutfieldBalance,
+];
 
 /**
  * Calculate the distribution of infield, outfield, 
@@ -118,11 +125,14 @@ function printLineup(innings /* Array<Array<player as string>> */, positions) {
 
 function printBattingOrder(game, players, positions) {
   const batting = shuffle(players);
-  return batting.map(player => [player, ...playerPositions(game, player).map(pos => positions[pos] || 'bench')]);
+  return batting.map(player => [player, ...playerPositions(game, player).map(pos => positions[pos] || 'X')]);
 }
 
 const game = generateGame(PLAYERS, RULES, 6);
-printBattingOrder(game, PLAYERS, POSITIONS);
+
+console.log(
+printBattingOrder(game, PLAYERS, POSITIONS)
+);
 
 
 //const game = generateCandidateGame(PLAYERS, 6);
