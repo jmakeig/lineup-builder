@@ -45,4 +45,7 @@ Will print out something like
 └──────────┴────┴────┴────┴────┴────┴────┘
 ```
 
-(The table aligns on the commandline.)
+## Requirements 
+
+* Node.js >=6.0.0 and npm >=3.0.0
+* Bash, to build and clean up
