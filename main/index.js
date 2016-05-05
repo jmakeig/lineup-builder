@@ -10,6 +10,8 @@ import {
   infieldOutfieldBalance,
 } from './rules.js';
 
+import Table from 'cli-table';
+
 
 const PLAYERS = ['Kingston', 'Naim', 'Micah', 'Oliver', 'Cadeo', 'Joseph', 'Jonathan', 'Vincent', 'Mateo', 'Harper', 'Griffin', 'Devin', 'Dalen', 'Quincy'];
 const POSITIONS = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'CF'];
@@ -28,13 +30,15 @@ function printLineup(innings /* Array<Array<player as string>> */, positions) {
   )
 }
 
-function printBattingOrder(game, players, positions) {
+function battingOrder(game, players, positions) {
   const batting = shuffle(players);
   return batting.map(player => [player, ...playerPositions(game, player).map(pos => positions[pos] || '●')]);
 }
 
 const game = generateGame(PLAYERS, RULES, 6);
+const lineup = battingOrder(game, PLAYERS, POSITIONS);
 
-console.log(
-printBattingOrder(game, PLAYERS, POSITIONS)
-);
+const table = new Table({ head: ["Player", ...Array(6).fill(0).map((item, index) => index + 1)] });
+table.push(...lineup);
+
+console.log(table.toString());
