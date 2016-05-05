@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Constructs a baseball lineup based on players, positions, and user-defined rules.",
   "repository": "https://github.com/jmakeig/lineup-builder",
-  "main": "index.js",
+  "main": "dist/main/index.js",
   "scripts": {
     "test": "npm run build && tape dist/test/**/*.test.js | tap-notify | tap-diff",
     "build": "babel main -d dist/main && babel test -d dist/test",
