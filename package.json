@@ -17,9 +17,7 @@
     "tap-notify": "^1.0.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.4.0",
-    "tape-catch": "^1.0.4"
-  },
-  "dependencies": {
+    "tape-catch": "^1.0.4",
     "babel": "^6.5.2",
     "babel-cli": "^6.8.0",
     "babel-preset-node6": "^11.0.0"
