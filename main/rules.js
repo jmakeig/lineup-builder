@@ -58,10 +58,35 @@ function infieldOutfieldBalance(game, players, positions) {
     });
 }
 
+/**
+ * Logs a message to the console if the rule returns `false`. Passes through 
+ * all arguments to the rule invocation as-is.
+ * 
+ * @param  {function} rule  The original rule function
+ * @param  {string} message A message to display on the console when the rule 
+ *                          does not pass (i.e. returns `false`)
+ * @return {function}       A function with the same signature as the rule
+ */
+function loggingAdvice(rule /* function(game, players, positions) boolean */, message) {
+  return function() {
+    const result = rule.call(null, ...arguments);
+    if(!result) {
+      console.log(message);
+    }
+    return result;
+  }
+}
+
+const _eligiblePitchers = loggingAdvice(eligiblePitchers, 'eligiblePitchers');
+const _eligibleCatchers = loggingAdvice(eligibleCatchers, 'eligibleCatchers');
+const _onlyPitchOneInning = loggingAdvice(onlyPitchOneInning, 'onlyPitchOneInning');
+const _dontSitConsecutiveInnings = loggingAdvice(dontSitConsecutiveInnings, 'dontSitConsecutiveInnings');
+const _infieldOutfieldBalance = loggingAdvice(infieldOutfieldBalance, 'infieldOutfieldBalance');
+
 export { 
-  eligiblePitchers, 
-  eligibleCatchers, 
-  onlyPitchOneInning, 
-  dontSitConsecutiveInnings,
-  infieldOutfieldBalance,
+  _eligiblePitchers as eligiblePitchers, 
+  _eligibleCatchers as eligibleCatchers, 
+  _onlyPitchOneInning as onlyPitchOneInning, 
+  _dontSitConsecutiveInnings as dontSitConsecutiveInnings,
+  _infieldOutfieldBalance as infieldOutfieldBalance,
 };
