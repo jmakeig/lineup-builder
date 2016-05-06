@@ -8,7 +8,7 @@ test('It should equal', (assert) => {
 });
 
 test('Should throw error', (assert) => {
-  assert.throws(function() { null.f(); }, TypeError);
+  assert.throws(() => null.f(), TypeError);
   assert.end();
 });
 
