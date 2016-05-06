@@ -16,7 +16,23 @@ function eligibleCatchers(game) {
     .some(player => player === inning[2 - 1]));
 }
 
-const onlyPitchOneInning = alwaysPass;
+function onlyPitchOneInning(game) {
+  if(!Array.isArray(game)) {
+    throw new TypeError('game must be a two-dimensional array of players representing postions (inner) by innning (outer)')
+  }
+  const pitchers = game 
+    .map(inning => inning[0])
+    .reduce((totals, player) => {
+      totals[player] = (totals[player] || 0) + 1;
+      return totals;
+    }, Object.create(null));
+  for(let player in pitchers) {
+    if(pitchers[player] > 1) {
+      return false;
+    }
+  }
+  return true;  
+}
 const dontSitConsecutiveInnings = alwaysPass;
 
 function infieldOutfieldBalance(game, players, positions) {
