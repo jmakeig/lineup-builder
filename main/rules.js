@@ -14,10 +14,6 @@ function eligibleCatchers(game, catchers) {
     .every(inning => catchers.some(player => player === inning[2 - 1]));
 }
 
-function report(msg) {
-  console.log(msg);
-}
-
 function onlyPitchOneInning(game) {
   if(!Array.isArray(game)) {
     throw new TypeError('game must be a two-dimensional array of players representing postions (inner) by innning (outer)')
@@ -30,7 +26,6 @@ function onlyPitchOneInning(game) {
     }, Object.create(null));
   for(let player in pitchers) {
     if(pitchers[player] > 1) {
-      report('onlyPitchOneInning');
       return false;
     }
   }
@@ -51,9 +46,6 @@ function infieldOutfieldBalance(game, players, positions) {
     .map(player => playerPositions(game, player))
     .some(pp => { 
       const totals = positionTotals(pp); 
-      if((totals.outfield - totals.infield) > OUTFIELDMAX || totals.bench > MAXBENCH) {
-        report('infieldOutfieldBalance');
-      }
       return (totals.outfield - totals.infield) > OUTFIELDMAX || totals.bench > MAXBENCH || totals.bench < 1;
     });
 }
@@ -71,7 +63,7 @@ function loggingAdvice(rule /* function(game, players, positions) boolean */, me
   return function() {
     const result = rule.call(null, ...arguments);
     if(!result) {
-      console.log(message);
+      //console.log(message);
     }
     return result;
   }
