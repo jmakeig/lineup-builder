@@ -35,7 +35,7 @@ function battingOrder(game, players, positions) {
   return batting.map(player => [player, ...playerPositions(game, player).map(pos => positions[pos] || '●')]);
 }
 
-const game = generateGame(PLAYERS, RULES, 6);
+const game = generateGame(PLAYERS, POSITIONS, RULES, 6);
 const lineup = battingOrder(game, PLAYERS, POSITIONS);
 
 const table = new Table({ head: ["Player", ...Array(6).fill(0).map((item, index) => index + 1)] });

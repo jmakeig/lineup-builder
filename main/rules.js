@@ -16,6 +16,10 @@ function eligibleCatchers(game) {
     .some(player => player === inning[2 - 1]));
 }
 
+function report(msg) {
+  console.log(msg);
+}
+
 function onlyPitchOneInning(game) {
   if(!Array.isArray(game)) {
     throw new TypeError('game must be a two-dimensional array of players representing postions (inner) by innning (outer)')
@@ -28,6 +32,7 @@ function onlyPitchOneInning(game) {
     }, Object.create(null));
   for(let player in pitchers) {
     if(pitchers[player] > 1) {
+      report('onlyPitchOneInning');
       return false;
     }
   }
@@ -41,11 +46,17 @@ function infieldOutfieldBalance(game, players, positions) {
     OF: 4 -> LF, CF, RF, CF
     B : 4
   */
+ const MAXBENCH = 0 + Math.ceil((1 - positions.length / players.length) * game.length);
+ const OUTFIELDMAX = 3
+ 
   return !players
     .map(player => playerPositions(game, player))
     .some(pp => { 
       const totals = positionTotals(pp); 
-      return totals.outfield - totals.infield > 3 || totals.bench > 2;
+      if((totals.outfield - totals.infield) > OUTFIELDMAX || totals.bench > MAXBENCH) {
+        report('infieldOutfieldBalance');
+      }
+      return (totals.outfield - totals.infield) > OUTFIELDMAX || totals.bench > MAXBENCH || totals.bench < 1;
     });
 }
 

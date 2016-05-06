@@ -9,13 +9,13 @@ import {
   playerPositions
 } from './lineup-helpers.js';
 
-function generateGame(players, rules, count) {
-  const MAX = 1000000;
+function generateGame(players, positions, rules, count) {
+  const MAX = 10000000000;
   let game, 
       iterations = 0;
   do {
     game = generateCandidateGame(players, count);
-  } while(++iterations < MAX && !checkRules(rules, game, players))
+  } while(++iterations < MAX && !checkRules(rules, game, players, positions))
   if(MAX === iterations) {
     throw new Error(`Unable to generate an inning that satisfies the ${rules.length} rules.`)
   }

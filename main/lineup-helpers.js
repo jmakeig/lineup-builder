@@ -13,9 +13,9 @@ function shuffle(input) {
   return arr;
 }
 
-function isInfield(position) { return position < 6; }
-function isOutfield(position) { return position > 5; }
-function isBench(position) { null === position || 'undefined' === typeof position || position < 0 || position > 9;  }
+function isInfield(position) { return !isBench(position) && position < 6; }
+function isOutfield(position) { return !isBench(position) && position > 5; }
+function isBench(position) { return null === position || 'undefined' === typeof position || position < 0 || position > 9;  }
 
 /**
  * Calculate the distribution of infield, outfield, 
