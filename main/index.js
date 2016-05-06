@@ -16,8 +16,14 @@ import Table from 'cli-table';
 const PLAYERS = ['Kingston', 'Naim', 'Micah', 'Oliver', 'Cadeo', 'Joseph', 'Jonathan', 'Vincent', 'Mateo', 'Harper', 'Griffin', 'Devin', 'Dalen', 'Quincy'];
 const POSITIONS = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'CF'];
 const RULES = [
-  eligiblePitchers,
-  eligibleCatchers,
+  function(game, players, positions) { 
+    const pitchers = ['Joseph', 'Cadeo', 'Jonathan', 'Oliver', 'Micah', 'Devin', 'Quincy', 'Kingston'];
+    return eligiblePitchers.call(null, game, pitchers);
+  },
+  function(game, players, positions) {
+    const catchers = ['Oliver', 'Dalen', 'Micah', 'Naim', 'Devin', 'Vincent'];
+    return eligibleCatchers.call(null, game, catchers);
+  },
   onlyPitchOneInning,
   dontSitConsecutiveInnings,
   infieldOutfieldBalance,
@@ -42,3 +48,4 @@ const table = new Table({ head: ["Player", ...Array(6).fill(0).map((item, index)
 table.push(...lineup);
 
 console.log(table.toString());
+console.log(game);

@@ -4,16 +4,14 @@ import { positionTotals, playerPositions } from './lineup-helpers.js';
  
 function alwaysPass() { return true; }
 
-function eligiblePitchers(game) {
+function eligiblePitchers(game, pitchers) {
   return game
-    .every(inning => ['Joseph', 'Cadeo', 'Jonathan', 'Oliver', 'Micah', 'Devin', 'Quincy', 'Kingston']
-    .some(player => player === inning[1 - 1]));
+    .every(inning => pitchers.some(player => player === inning[1 - 1]));
 }
 
-function eligibleCatchers(game) {
+function eligibleCatchers(game, catchers) {
   return game
-    .every(inning => ['Oliver', 'Dalen', 'Micah', 'Naim', 'Devin', 'Vincent']
-    .some(player => player === inning[2 - 1]));
+    .every(inning => catchers.some(player => player === inning[2 - 1]));
 }
 
 function report(msg) {
