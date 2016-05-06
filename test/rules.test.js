@@ -42,6 +42,6 @@ test('B shouldn’t pitch more than once', (assert) => {
 
 test('Invalid game', (assert) => {
   const game = undefined;
-  assert.throws(function() { onlyPitchOneInning(game); }, TypeError);
+  assert.throws(() => onlyPitchOneInning(game), TypeError);
   assert.end();
 });
