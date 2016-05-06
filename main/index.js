@@ -41,11 +41,37 @@ function battingOrder(game, players, positions) {
   return batting.map(player => [player, ...playerPositions(game, player).map(pos => positions[pos] || '●')]);
 }
 
-const game = generateGame(PLAYERS, POSITIONS, RULES, 6);
-const lineup = battingOrder(game, PLAYERS, POSITIONS);
+/**
+ * Reads the input stream as UTF-8 text.
+ * @param [ReadableStream] readStream
+ * @return [Promise]
+ */
+function readInput(readStream) {
+  return new Promise(function(resolve, reject) {
+    let buffer = '';
+    readStream.setEncoding('utf-8');
+    readStream.resume();
+    readStream.on('data', chunk => buffer += chunk);
+    readStream.on('end', () => resolve(buffer));
+  })
+}
 
-const table = new Table({ head: ["Player", ...Array(6).fill(0).map((item, index) => index + 1)] });
-table.push(...lineup);
-
-console.log(table.toString());
-console.log(game);
+readInput(process.stdin)
+  .then(function(json){
+    let game;
+    if(json) {
+      game = JSON.parse(json);
+    } else {
+      game = generateGame(PLAYERS, POSITIONS, RULES, 6);
+    }
+    const lineup = battingOrder(game, PLAYERS, POSITIONS);
+    const table = new Table({ head: ["Player", ...Array(6).fill(0).map((item, index) => index + 1)] });
+    table.push(...lineup);
+    console.log(table.toString());
+    if(!json) {
+      console.log(game);
+    }
+  })
+  .catch(function(err) {
+    process.stderr.write('Ooops');
+  });
