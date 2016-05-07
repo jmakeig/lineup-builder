@@ -6,8 +6,9 @@ import {
   eligiblePitchers, 
   eligibleCatchers, 
   onlyPitchOneInning, 
-  dontSitConsecutiveInnings,
   infieldOutfieldBalance,
+  dontSitConsecutiveInnings,
+  dontPlaySamePositionConsecutiveInnings,
 } from '../main/rules.js';
 
 test('A shouldn’t pitch more than once', (assert) => {
@@ -43,5 +44,25 @@ test('B shouldn’t pitch more than once', (assert) => {
 test('Invalid game', (assert) => {
   const game = undefined;
   assert.throws(() => onlyPitchOneInning(game), TypeError);
+  assert.end();
+});
+
+test('B shouldn’t play 1B in consecutive innings', (assert) => {
+  const game = [
+    ['A', 'B', 'C'],
+    ['B', 'B', 'C'],
+    ['B', 'A', 'C']
+  ];
+  assert.false(dontPlaySamePositionConsecutiveInnings(game, ['A', 'B', 'C']));
+  assert.end();
+});
+
+test('No one plays the same position in consecutive innings', (assert) => {
+  const game = [
+    ['A', 'B', 'C'],
+    ['B', 'C', 'A'],
+    ['C', 'A', 'B']
+  ];
+  assert.true(dontPlaySamePositionConsecutiveInnings(game, ['A', 'B', 'C']));
   assert.end();
 });
