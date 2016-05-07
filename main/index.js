@@ -8,6 +8,7 @@ import {
   onlyPitchOneInning, 
   dontSitConsecutiveInnings,
   infieldOutfieldBalance,
+  benchEquity
 } from './rules.js';
 
 import Table from 'cli-table';
@@ -25,6 +26,7 @@ const RULES = [
     return eligibleCatchers.call(null, game, catchers);
   },
   onlyPitchOneInning,
+  benchEquity,
   dontSitConsecutiveInnings,
   infieldOutfieldBalance,
 ];
@@ -56,22 +58,22 @@ function readInput(readStream) {
   })
 }
 
-readInput(process.stdin)
-  .then(function(json){
-    let game;
-    if(json) {
-      game = JSON.parse(json);
-    } else {
-      game = generateGame(PLAYERS, POSITIONS, RULES, 6);
-    }
+// readInput(process.stdin)
+//   .then(function(json){
+//     let game;
+//     if(json) {
+//       console.console.log('JSON');
+//     } else {
+    const  game = generateGame(PLAYERS, POSITIONS, RULES, 6);
+    // }
     const lineup = battingOrder(game, PLAYERS, POSITIONS);
     const table = new Table({ head: ["Player", ...Array(6).fill(0).map((item, index) => index + 1)] });
     table.push(...lineup);
     console.log(table.toString());
-    if(!json) {
+  //   if(!json) {
       console.log(game);
-    }
-  })
-  .catch(function(err) {
-    process.stderr.write('Ooops');
-  });
+  //   }
+  // })
+  // .catch(function(err) {
+  //   process.stderr.write('Ooops');
+  // });
