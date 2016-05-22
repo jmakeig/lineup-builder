@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import {
   shuffle, 
@@ -15,7 +15,7 @@ function generateGame(players, positions, rules, count) {
       iterations = 0;
   do {
     game = generateCandidateGame(players, count);
-  } while(++iterations < MAX && !checkRules(rules, game, players, positions))
+  } while(++iterations < MAX && !checkRules(rules, game, players, positions));
   if(MAX === iterations) {
     throw new Error(`Unable to generate an inning that satisfies the ${rules.length} rules.`)
   }
